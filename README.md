@@ -1,4 +1,4 @@
-# TMO
+# TMO-RAFT
 
 This is an easy-to-use video object segmentation code, based on the paper: 
 
