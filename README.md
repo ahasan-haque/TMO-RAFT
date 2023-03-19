@@ -66,5 +66,5 @@ docker run -e OUTPUT_PATH=/output -e DATASET_PATH=/dataset \
 --gpus all -it --rm tmo-raft
 ```
 
-## License
-The skeleton of this project is taken from [official TMO Implementation][https://github.com/suhwan-cho/TMO]. Special thanks to @suhwan-cho for providing guideline.
+## Credit
+The skeleton of this code is taken from [official TMO Implementation](https://github.com/suhwan-cho/TMO). Special thanks to [Suhwan Cho](https://github.com/suhwan-cho) for providing guideline.
