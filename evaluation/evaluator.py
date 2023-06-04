@@ -25,17 +25,20 @@ class Evaluator(object):
             fpath = os.path.join(output_path, video_name, files[idx])
             gt = gts[idx]
             data = ((vos_out['masks'][0, idx, 0, :, :].cpu().byte().numpy(), fpath), self.sdm)
+            np.save('gt.npy', gt)
+            np.save('output.npy', data[0][0])
+
             print(data[0][0].shape, data[0][0].dtype, np.unique(data[0][0]))
             import matplotlib.pyplot as plt
             # Assuming you have two 2D image arrays named image1 and image2
             fig, axs = plt.subplots(1, 2)
 
             # Display the first image on the left subplot
-            axs[0].imshow(gt, cmap='gray')
+            axs[0].imshow(gt, cmap='gray', vmin=0, vmax=1)
             axs[0].axis('off')
 
             # Display the second image on the right subplot
-            axs[1].imshow(data[0][0], cmap='gray')
+            axs[1].imshow(data[0][0], cmap='gray', vmin=0, vmax=1)
             axs[1].axis('off')
 
             plt.subplots_adjust(wspace=0.05)
