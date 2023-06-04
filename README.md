@@ -15,7 +15,7 @@ PDF: [[Official]](https://openaccess.thecvf.com/content/WACV2023/papers/Cho_Trea
 In unsupervised VOS, most state-of-the-art methods leverage motion cues obtained from optical flow maps in addition to appearance cues. However, as they are overly dependent on motion cues, which may be unreliable in some cases, they cannot achieve stable prediction. To overcome this limitation, we design a novel network that operates regardless of motion availability, termed as a **motion-as-option network**. Additionally, to fully exploit the property of the proposed network that motion is not always required, we introduce a **collaborative network learning strategy**. As motion is treated as option, fine and accurate segmentation masks can be consistently generated even when the quality of the flow maps is low.
 
 ## Preparation
-Create a **/dataset** directory, and under the directory, store your image sequences under different directory name. Like below:
+Create a **dataset** directory, and under the directory, store your image sequences under different directory name. Like below:
 
 ```
 TMO-RAFT
@@ -32,8 +32,8 @@ TMO-RAFT
         -- img2.png  
 ```
 
-For evaluation, make **/gt** directory (ground truth masks) with same nested structure.
-Also, create a **/output** directory (mandatory if you run inside a docker container, otherwise optional)
+For evaluation, make **gt** directory (ground truth masks) with same nested structure.
+Also, create a **output** directory (mandatory if you run inside a docker container, otherwise optional)
 
 ## Testing
 1\. Make sure the pre-trained models are in your *"trained_model"* folder.
