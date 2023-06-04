@@ -13,7 +13,6 @@ class Evaluator(object):
         imgs = video_parts['imgs'].cuda()
         flows = video_parts['flows'].cuda()
         gts = video_parts['gts']
-        print(gts.shape, gts.dtype, np.unique(gts))
         files = video_parts['files']
 
         # inference
@@ -26,8 +25,6 @@ class Evaluator(object):
             fpath = os.path.join(output_path, video_name, files[idx])
             gt = gts[idx]
             data = ((vos_out['masks'][0, idx, 0, :, :].cpu().byte().numpy(), fpath), self.sdm)
-            np.save('gt.npy', gt)
-            np.save('output.npy', data[0][0])
             intersection = np.sum(data[0][0] & gt)
             union = np.sum(data[0][0] | gt)
 
