@@ -2,7 +2,7 @@ import os
 import time
 import utils
 import numpy as np
-
+import time
 class Evaluator(object):
     def __init__(self, dataset):
         self.dataset = dataset
@@ -39,8 +39,8 @@ class Evaluator(object):
             axs[1].axis('off')
 
             plt.subplots_adjust(wspace=0.05)
-            plt.show()
-            import time; time.sleep(10000)
+            plt.savefig('a.png')
+            time.sleep(10000)
             break
             self.img_saver.enqueue(data)
         return t1 - t0, imgs.size(1)
