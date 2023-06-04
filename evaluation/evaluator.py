@@ -12,8 +12,8 @@ class Evaluator(object):
     def evaluate_video(self, model, video_name, video_parts, output_path):
         imgs = video_parts['imgs'].cuda()
         flows = video_parts['flows'].cuda()
-        gts = video_parts['gts']
-        print(gts.shape)
+        #gts = video_parts['gts']
+        #print(gts.shape)
         files = video_parts['files']
 
         # inference
@@ -23,9 +23,10 @@ class Evaluator(object):
 
         for idx in range(len(files)):
             fpath = os.path.join(output_path, video_name, files[idx])
-            gt = gts[idx]
+            #gt = gts[idx]
             data = ((vos_out['masks'][0, idx, 0, :, :].cpu().byte().numpy(), fpath), self.sdm)
             print(data[0][0].shape, data[0][0].dtype, np.unique(data[0][0]))
+            exit(0)
             self.img_saver.enqueue(data)
         return t1 - t0, imgs.size(1)
 

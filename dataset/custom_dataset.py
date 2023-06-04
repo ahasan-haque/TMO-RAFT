@@ -113,7 +113,7 @@ class TestCustomDataset(Dataset):
     def get_video(self):
         image_sequence_path = os.path.join(self.root, self.dataset_name, 'Images')
         flow_sequence_path = os.path.join(self.root, self.dataset_name, 'Flows')
-        gt_sequence_path = os.path.join(self.root, self.dataset_name, 'GT')
+        #gt_sequence_path = os.path.join(self.root, self.dataset_name, 'GT')
         image_name_list = os.listdir(image_sequence_path) 
         image_name_list = sorted(image_name_list, key= lambda x: int(x.split(".")[0]))
         self.create_flows(self.dataset_name)
@@ -127,10 +127,12 @@ class TestCustomDataset(Dataset):
                 os.path.join(flow_sequence_path, image_name )
             ) for image_name 
             in image_name_list]).unsqueeze(0)
+        '''
         gts = torch.stack([
             self.read_img(
                 os.path.join(gt_sequence_path, image_name.replace("jpg", "png"))
             ) for image_name 
             in image_name_list]).unsqueeze(0)
-
-        return self.dataset_name, {'imgs': imgs, 'flows': flows, 'files': image_name_list, 'gts': gts}
+        '''
+        #return self.dataset_name, {'imgs': imgs, 'flows': flows, 'files': image_name_list, 'gts': gts}
+        return self.dataset_name, {'imgs': imgs, 'flows': flows, 'files': image_name_list}
