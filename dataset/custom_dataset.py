@@ -118,7 +118,7 @@ class TestCustomDataset(Dataset):
     def get_video(self):
         image_sequence_path = os.path.join(self.root, self.dataset_name, 'Images')
         flow_sequence_path = os.path.join(self.root, self.dataset_name, 'Flows')
-        gt_sequence_path = os.path.join('/GT', self.dataset_name)
+        gt_sequence_path = os.path.join('/gt', self.dataset_name)
         image_name_list = os.listdir(image_sequence_path) 
         image_name_list = sorted(image_name_list, key= lambda x: int(x.split(".")[0]))
         self.create_flows(self.dataset_name)
