@@ -17,6 +17,7 @@ In unsupervised VOS, most state-of-the-art methods leverage motion cues obtained
 ## Preparation
 Create a **/dataset** directory, and under the directory, store your image sequences under different directory name. Like below:
 
+```
 TMO-RAFT
 |
 -- datasets
@@ -29,6 +30,7 @@ TMO-RAFT
       |
         -- img1.png
         -- img2.png  
+```
 
 For evaluation, make **/gt** directory (ground truth masks) with same nested structure.
 Also, create a **/output** directory (mandatory if you run inside a docker container, otherwise optional)
