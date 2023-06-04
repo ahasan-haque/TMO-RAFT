@@ -1,4 +1,4 @@
-# TMO-RAFT
+# TMO
 
 This is an easy-to-use video object segmentation code, based on the paper: 
 
@@ -17,7 +17,6 @@ In unsupervised VOS, most state-of-the-art methods leverage motion cues obtained
 ## Preparation
 Create a **/dataset** directory, and under the directory, store your image sequences under different directory name. Like below:
 
-```
 TMO-RAFT
 |
 -- datasets
@@ -30,8 +29,8 @@ TMO-RAFT
       |
         -- img1.png
         -- img2.png  
-```
 
+For evaluation, make **/gt** directory (ground truth masks) with same nested structure.
 Also, create a **/output** directory (mandatory if you run inside a docker container, otherwise optional)
 
 ## Testing
@@ -62,11 +61,29 @@ You can run a docker container with the following command:
 
 ```
 docker build -t tmo-raft . && \
-docker run -e OUTPUT_PATH=/output -e DATASET_PATH=/dataset \
--v datasets:/dataset/ \
--v output:/output \
---gpus all -it --rm tmo-raft
+docker run -e DATASET_PATH=/datasets \
+           -e OUTPUT_PATH=/output \
+           -e GT_PATH =/gt \
+           -v HOST_DATASET_PATH:/datasets \
+           -v HOST_GT_PATH:/gt \
+           -v HOST_OUTPUT_PATH:/output \
+           --gpus all
+           tmo-raft
 ```
 
-## Credit
-The skeleton of this code is taken from [official TMO Implementation](https://github.com/suhwan-cho/TMO). Special thanks to [Suhwan Cho](https://github.com/suhwan-cho) for providing guideline.
+For example, this is the exact command is run locally:
+
+```
+docker build -t tmo-raft . && \
+docker run -e DATASET_PATH=/datasets \
+           -e OUTPUT_PATH=/output \
+           -e GT_PATH =/gt \
+           -v c:\Users\ge79pih\tmo_data\tmo\tmo_dataset:/datasets \
+           -v c:\Users\ge79pih\tmo_data\tmo\tmo_gt:/gt \
+           -v c:\Users\ge79pih\tmo_data\tmo\tmo_output:/output \
+           --gpus all
+           tmo-raft
+```
+
+## License
+The skeleton of this project is taken from [official TMO Implementation][https://github.com/suhwan-cho/TMO]. Special thanks to @suhwan-cho for providing guideline.
