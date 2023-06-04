@@ -2,6 +2,7 @@ import os
 import imghdr
 import shutil
 from .transforms import *
+import numpy as np
 from torch.utils.data import Dataset
 import torchvision as tv
 import torchvision.transforms.functional as F
@@ -42,11 +43,15 @@ class TestCustomDataset(Dataset):
         shutil.rmtree(source_dir)
         shutil.rmtree(flow_dir)
 
-
     def read_img(self, path):
         pic = Image.open(path)
         transform = tv.transforms.ToTensor()
         return transform(pic)
+    
+    def read_gt(self, path):
+        pic = Image.open(path)
+        image = np.array(pic)
+        return image
 
     def read_mask(self, path):
         pic = Image.open(path)
@@ -113,7 +118,7 @@ class TestCustomDataset(Dataset):
     def get_video(self):
         image_sequence_path = os.path.join(self.root, self.dataset_name, 'Images')
         flow_sequence_path = os.path.join(self.root, self.dataset_name, 'Flows')
-        #gt_sequence_path = os.path.join(self.root, self.dataset_name, 'GT')
+        gt_sequence_path = os.path.join('/GT', self.dataset_name)
         image_name_list = os.listdir(image_sequence_path) 
         image_name_list = sorted(image_name_list, key= lambda x: int(x.split(".")[0]))
         self.create_flows(self.dataset_name)
@@ -127,12 +132,10 @@ class TestCustomDataset(Dataset):
                 os.path.join(flow_sequence_path, image_name )
             ) for image_name 
             in image_name_list]).unsqueeze(0)
-        '''
         gts = torch.stack([
-            self.read_img(
+            self.read_gt(
                 os.path.join(gt_sequence_path, image_name.replace("jpg", "png"))
             ) for image_name 
             in image_name_list]).unsqueeze(0)
-        '''
-        #return self.dataset_name, {'imgs': imgs, 'flows': flows, 'files': image_name_list, 'gts': gts}
-        return self.dataset_name, {'imgs': imgs, 'flows': flows, 'files': image_name_list}
+        return self.dataset_name, {'imgs': imgs, 'flows': flows, 'files': image_name_list, 'gts': gts}
+        #return self.dataset_name, {'imgs': imgs, 'flows': flows, 'files': image_name_list}

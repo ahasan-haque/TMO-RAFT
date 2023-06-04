@@ -12,8 +12,8 @@ class Evaluator(object):
     def evaluate_video(self, model, video_name, video_parts, output_path):
         imgs = video_parts['imgs'].cuda()
         flows = video_parts['flows'].cuda()
-        #gts = video_parts['gts']
-        #print(gts.shape)
+        gts = video_parts['gts']
+        print(gts.shape, gts.dtype, np.unique(gts))
         files = video_parts['files']
 
         # inference
@@ -23,10 +23,25 @@ class Evaluator(object):
 
         for idx in range(len(files)):
             fpath = os.path.join(output_path, video_name, files[idx])
-            #gt = gts[idx]
+            gt = gts[idx]
             data = ((vos_out['masks'][0, idx, 0, :, :].cpu().byte().numpy(), fpath), self.sdm)
             print(data[0][0].shape, data[0][0].dtype, np.unique(data[0][0]))
-            exit(0)
+            import matplotlib.pyplot as plt
+            # Assuming you have two 2D image arrays named image1 and image2
+            fig, axs = plt.subplots(1, 2)
+
+            # Display the first image on the left subplot
+            axs[0].imshow(gt, cmap='gray')
+            axs[0].axis('off')
+
+            # Display the second image on the right subplot
+            axs[1].imshow(data[0][0], cmap='gray')
+            axs[1].axis('off')
+
+            plt.subplots_adjust(wspace=0.05)
+            plt.show()
+            import time; time.sleep(10000)
+            break
             self.img_saver.enqueue(data)
         return t1 - t0, imgs.size(1)
 
