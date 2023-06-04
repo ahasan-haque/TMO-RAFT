@@ -122,6 +122,8 @@ class TestCustomDataset(Dataset):
         image_name_list = os.listdir(image_sequence_path) 
         image_name_list = sorted(image_name_list, key= lambda x: int(x.split(".")[0]))
         self.create_flows(self.dataset_name)
+        print("going to sleep for 50 seconds")
+        import time; time.sleep(50)
         imgs = torch.stack([
             self.read_img(
                 os.path.join(image_sequence_path, image_name)
@@ -132,10 +134,10 @@ class TestCustomDataset(Dataset):
                 os.path.join(flow_sequence_path, image_name )
             ) for image_name 
             in image_name_list]).unsqueeze(0)
-        gts = torch.stack([
+        gts = np.stack([
             self.read_gt(
                 os.path.join(gt_sequence_path, image_name.replace("jpg", "png"))
-            ) for image_name 
-            in image_name_list]).unsqueeze(0)
+            ) for image_name
+            in image_name_list])
         return self.dataset_name, {'imgs': imgs, 'flows': flows, 'files': image_name_list, 'gts': gts}
         #return self.dataset_name, {'imgs': imgs, 'flows': flows, 'files': image_name_list}
