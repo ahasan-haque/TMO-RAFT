@@ -25,10 +25,8 @@ class Evaluator(object):
             fpath = os.path.join(output_path, video_name, files[idx])
             gt = gts[idx]
             data = ((vos_out['masks'][0, idx, 0, :, :].cpu().byte().numpy(), fpath), self.sdm)
-            output = ~ data[0][0]
-            output -= 254
-            intersection = np.sum(output & gt)
-            union = np.sum(output | gt)
+            intersection = np.sum(data[0][0] & gt)
+            union = np.sum(data[0][0] | gt)
 
             # Accumulate the intersection and union over all frames
             running_intersection += intersection

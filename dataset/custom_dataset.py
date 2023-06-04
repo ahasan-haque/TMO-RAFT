@@ -51,6 +51,8 @@ class TestCustomDataset(Dataset):
     def read_gt(self, path):
         pic = Image.open(path)
         image = np.array(pic)
+        image = ~image
+        image -= 254
         return image
 
     def read_mask(self, path):
